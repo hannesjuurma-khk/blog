@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+    # Lubab väljastada linki ainult faili nime lõpuni (lõppeb praegu index.php-ga)
+    # Kui Multiviews on aktiivne, lisab ta faililaiendid ise automaatselt ja otsib vastavalt sellele antud laiendiga faili. Näiteks kui sa lähed kuskile leheküljele "www.minuleht.ee/index", siis ta otsib automaatselt kas index.html või index.php vms faili. Kui Multiviews on ebaktiivne, siis on see automaatselt otsima ei hakka kui just sellist kausta ei eksisteeri;
+    Options -Multiviews
+    # Panen käima ümberkirjutamise mootori
+    RewriteEngine On
+    # Siia kirjutan local host taga oleva tahetud osa
+    RewriteBase /PVK/public
+    # Siia panen kirja tingimused ümberkirjutamiseks
+    # Kui faili või kausta antud nimega ei eksisteeri, siis muutub url.
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+</IfModule>

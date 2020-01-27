@@ -1,0 +1,8 @@
+# Suuname PVK ümber public peale
+<IfModule mod_rewrite.c>
+# Multiviews pole vaja maha võtta, kuna siin on ainult kaustad
+    RewriteEngine On
+    RewriteRule ^$ public/ [L]
+    RewriteRule ^(.*)$ public/$1 [L]
+
+</IfModule>
