@@ -5,7 +5,7 @@
     # Panen käima ümberkirjutamise mootori
     RewriteEngine On
     # Siia kirjutan local host taga oleva tahetud osa
-    RewriteBase /PVK/public
+    RewriteBase /blog/public
     # Siia panen kirja tingimused ümberkirjutamiseks
     # Kui faili või kausta antud nimega ei eksisteeri, siis muutub url.
     RewriteCond %{REQUEST_FILENAME} !-d

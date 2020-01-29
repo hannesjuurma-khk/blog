@@ -1,4 +1,5 @@
 <?php
+error_reporting(~E_NOTICE);
 // Süsteemi jaoks vajalikud parameetrid
 require_once '../app/bootstrap.php';
 

@@ -1,6 +1,6 @@
 <?php
 // Projekti nimi
-define('PROJECT_NAME', 'PVK');
+define('PROJECT_NAME', 'blog');
 // Root url
 define('URLROOT', 'http://'.$_SERVER['HTTP_HOST'].'/'.PROJECT_NAME);
 // App root kataloog
@@ -11,6 +11,6 @@ define('APPROOT', dirname(dirname(__FILE__)));
 define('DB_HOST', 'localhost');
 define('DB_USER', 'pdomees');
 define('DB_PASS', 'Hannes123');
-define('DB_NAME', 'pdo');
+define('DB_NAME', 'blog');
 
 

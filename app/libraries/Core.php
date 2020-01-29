@@ -4,13 +4,13 @@ class Core
 {
     protected $currentController = 'Pages';
     protected $currentMethod = 'index';
-    protected $params = [];
+    protected $params = array();
 
     public function __construct()
     {
         $url = $this->getUrl();
         // Controlleri kontrollimine ja saamine
-        if(file_exists('../app/controllers/'.ucwords($url[0]).'.php')) {
+        if(file_exists('../app/controllers/'.ucwords($url[0]).'.php')){
             $this ->currentController = ucwords($url[0]);
             //See kustutab $url array-st ära antud numbri
             unset($url[0]);
@@ -29,11 +29,6 @@ class Core
 
         // call a callback function with url parameters - controllers, methods, parameters
         call_user_func_array(array($this->currentController, $this->currentMethod), $this->params);
-        /*
-        echo "<pre>";
-        print_r($url);
-        echo "</pre>";
-        */
     }
 
 

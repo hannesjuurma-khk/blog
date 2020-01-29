@@ -9,9 +9,7 @@ class Pages extends Controller
 
 
     public function index(){
-        $data = array('title' => 'Welcome - Pages controller is loaded');
+        $data = array('title' => 'Hi! Welcome to the main page (brought to you by Pages controller!');
         $this->view('pages/index',$data);
     }
-
-
 }
