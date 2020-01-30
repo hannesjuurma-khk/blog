@@ -13,4 +13,7 @@ define('DB_USER', 'pdomees');
 define('DB_PASS', 'Hannes123');
 define('DB_NAME', 'blog');
 
+// Password pikkus
+define('PASSWORD_LEN', 8);
+
 
