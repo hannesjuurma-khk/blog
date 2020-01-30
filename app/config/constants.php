@@ -9,7 +9,7 @@ define('APPROOT', dirname(dirname(__FILE__)));
 
 // db parameetrid
 define('DB_HOST', 'localhost');
-define('DB_USER', 'pdomees');
+define('DB_USER', 'blogmees');
 define('DB_PASS', 'Hannes123');
 define('DB_NAME', 'blog');
 
