@@ -14,6 +14,6 @@ define('DB_PASS', 'Hannes123');
 define('DB_NAME', 'blog');
 
 // Password pikkus
-define('PASSWORD_LEN', 8);
+define('PASSWORD_LEN', 6);
 
 

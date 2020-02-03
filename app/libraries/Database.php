@@ -1,7 +1,7 @@
 <?php
 
 
-class database
+class Database
 {
     private $host = DB_HOST;
     private $user = DB_USER;
@@ -51,7 +51,7 @@ class database
     }
 
     public function execute(){
-        $this->stmt->execute();
+        return $this->stmt->execute();
     }
 
     // Kutsub mitu rida

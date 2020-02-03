@@ -5,7 +5,7 @@ class Users extends Controller
 {
     public function __construct()
     {
-        $usersModel = $this->model('User');
+        $this->userModel = $this->model('User');
     }
 
     public function register(){
@@ -32,6 +32,8 @@ class Users extends Controller
                 $data['email_err'] = 'Please enter a email';
             } else if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)){
                 $data['email_err'] = 'Please enter a valid email';
+            } else if ($this->userModel->findUserByEmail($data['email'])) {
+                $data['email_err'] = "Email is already taken";
             }
 
             if(empty($data['password'])) {
@@ -47,12 +49,31 @@ class Users extends Controller
             }
 
             if(empty($data['name_err']) AND empty($data['email_err']) AND empty($data['password_err']) AND empty($data['password_confirm_err'])) {
+                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                echo "Andmed on õigesti sisestatud";
 
+                // Andmete lisamine andmebaasi
+                if($this->userModel->register($data)){
+                    header('Location: '.URLROOT.'/'.'users/login');
+                } else {
+                    die('Something went wrong');
+                }
             }
 
+
+        } else {
+            $data = array(
+                'name' => '',
+                'email' => '',
+                'password' => '',
+                'confirm_password' => '',
+                'name_err' => '',
+                'email_err' => '',
+                'password_err' => '',
+                'password_confirm_err' => ''
+            );
         }
 
-        print_r($data);
         // Kutsun vaate viimase asjana, enne tegelen infoga
         $this->view('users/register', $data);
         }
