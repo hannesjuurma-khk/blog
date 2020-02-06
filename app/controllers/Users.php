@@ -78,4 +78,64 @@ class Users extends Controller
         $this->view('users/register', $data);
         }
 
+    public function login(){
+
+        // Log In vormi kontroll
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Eemaldab kahtlased märgid. Nt. HTML tag-id ja tundmatud tähed.
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $data = array(
+                'email' => trim($_POST['email']),
+                'password' => trim($_POST['password']),
+                'email_err' => '',
+                'password_err' => '',
+            );
+
+            // Emaili kontroll
+            if(empty($data['email'])) {
+                $data['email_err'] = 'Please enter a email';
+            }
+
+            // Passwordi kontroll
+            if(empty($data['password'])) {
+                $data['password_err'] = 'Please enter a password';
+            }
+
+            if (!$this->userModel->findUserByEmail($data['email'])) {
+                $data['email_err'] = "Email does not exist";
+            }
+
+            if(empty($data['email_err']) AND empty($data['password_err'])) {
+                // Sisse logimine
+                $loggedInUser = $this->userModel->login($data['email'], $data['password']);
+                if($loggedInUser) {
+                    // Kasutaja session
+                    $this->createUserSession($loggedInUser);
+//                    echo "Oled sees";
+                } else{
+                    $data["password_err"] = "Your password is incorrect!";
+                }
+
+            } else {
+                echo ("Something is wrong");
+            }
+
+        }
+
+        $this->view('users/login', $data);
+    }
+
+    public function createUserSession($user){
+        $_SESSION['user_id'] = $user->user_id;
+        $_SESSION['user_name'] = $user->user_name;
+        $_SESSION['user_email'] = $user->user_email;
+        header('Location: '.URLROOT.'/pages/index');
+
+    }
+
+    public function logout() {
+        session_unset();
+        session_destroy();
+        header('Location: '.URLROOT.'/users/login');
+    }
 }

@@ -5,6 +5,8 @@
     // Laeme vajalikud konstandid
     require_once 'config/constants.php';
 
+    // Session
+    session_start();
 
     // Laeme vajalikud raamatukogud - automaatselt
     spl_autoload_register(function ($className) {
