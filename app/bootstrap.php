@@ -8,6 +8,9 @@
     // Session
     session_start();
 
+    // Call for helper
+    require_once 'helpers/url_helper.php';
+
     // Laeme vajalikud raamatukogud - automaatselt
     spl_autoload_register(function ($className) {
         include 'libraries/' . $className . '.php';

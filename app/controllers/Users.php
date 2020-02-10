@@ -54,7 +54,7 @@ class Users extends Controller
 
                 // Andmete lisamine andmebaasi
                 if($this->userModel->register($data)){
-                    header('Location: '.URLROOT.'/'.'users/login');
+                    redirect('users/login');
                 } else {
                     die('Something went wrong');
                 }
@@ -130,12 +130,13 @@ class Users extends Controller
         $_SESSION['user_name'] = $user->user_name;
         $_SESSION['user_email'] = $user->user_email;
         header('Location: '.URLROOT.'/pages/index');
+        redirect('pages/index');
 
     }
 
     public function logout() {
         session_unset();
         session_destroy();
-        header('Location: '.URLROOT.'/users/login');
+        redirect('users/login');
     }
 }
