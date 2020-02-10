@@ -2,7 +2,7 @@
 
 class Core
 {
-    protected $currentController = 'Pages';
+    protected $currentController = 'Posts';
     protected $currentMethod = 'index';
     protected $params = array();
 

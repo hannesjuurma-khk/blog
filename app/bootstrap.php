@@ -6,7 +6,7 @@
     require_once 'config/constants.php';
 
     // Session
-    session_start();
+    require_once "helpers/session_helper.php";
 
     // Call for helper
     require_once 'helpers/url_helper.php';

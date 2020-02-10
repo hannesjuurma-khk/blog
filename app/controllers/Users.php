@@ -54,12 +54,13 @@ class Users extends Controller
 
                 // Andmete lisamine andmebaasi
                 if($this->userModel->register($data)){
+
                     redirect('users/login');
+                    message("register_success", "Now you can log in");
                 } else {
                     die('Something went wrong');
                 }
             }
-
 
         } else {
             $data = array(
