@@ -16,10 +16,10 @@
             </div>
             <div class="form-group">
                 <label for="tagselect">Pick your tags</label>
-                <select multiple class="form-control" id="tagselect">
+                <select name="tags[]" multiple class="form-control" id="tagselect">
 
                 <?php foreach ($data['tags'] as $tag) : ?>
-                    <option><?php echo $tag->tag_name; ?></option>
+                    <option value="<?php echo $tag->tag_id; ?>"><?php echo $tag->tag_name; ?></option>
                 <?php endforeach; ?>
 
                 </select>

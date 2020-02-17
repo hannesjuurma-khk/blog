@@ -97,9 +97,13 @@ class Posts extends Controller
                 'content' => trim($_POST['content']),
                 'user_id' => $_SESSION['user_id'],
                 'tags' => $tags,
+                'tag_ids' => $_POST['tags'],
                 'title_err' => '',
                 'content_err' => ''
             );
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
 
             if(empty($data['title'])){
                 $data['title_err'] = 'Please enter title';
@@ -109,7 +113,15 @@ class Posts extends Controller
             }
 
             if(empty($data['title_err']) and empty($data['content_err'])){
-                if($this->postModel->addPost($data)){
+                if($this->postModel->addPost($data) ){
+                    foreach ($data["tag_ids"] as $tag) {
+                        $this->postModel->addTag2Post(
+                          array(
+                              'tag_id' => $tag,
+                              'post_id' =>
+                          )
+                        );
+                    }
                     message('post_message', 'Post Added');
                     redirect('posts');
                 } else {
@@ -119,10 +131,15 @@ class Posts extends Controller
                 $this->view('posts/add', $data);
             }
         } else {
+            $tags = $this->postModel->getTags();
             $data = array(
-                'title' => '',
-                'content' => ''
+                'title' => 'tttest',
+                'content' => '',
+                'tags' => $tags
             );
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
             $this->view('posts/add', $data);
         }
     }
