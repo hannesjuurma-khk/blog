@@ -49,7 +49,7 @@ class Posts extends Controller
 
             if(empty($data['title_err']) and empty($data['content_err'])){
                 if($this->postModel->editPost($data)){
-                    msg('post_message', 'Post Updated');
+                    message('post_message', 'Post Updated');
                     redirect('posts');
                 } else {
                     die('Something went wrong');
@@ -78,7 +78,7 @@ class Posts extends Controller
                 redirect('posts');
             }
             if($this->postModel->deletePost($id)){
-                msg('post_message', 'Post Removed');
+                message('post_message', 'Post Removed');
                 redirect('posts');
             } else {
                 die('Something went wrong');
@@ -108,7 +108,7 @@ class Posts extends Controller
 
             if(empty($data['title_err']) and empty($data['content_err'])){
                 if($this->postModel->addPost($data)){
-                    msg('post_message', 'Post Added');
+                    message('post_message', 'Post Added');
                     redirect('posts');
                 } else {
                     die('Something went wrong');
