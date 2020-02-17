@@ -102,7 +102,7 @@ class Post
     }
 
     public function deleteTag($id){
-        $this->db->query('DELETE FROM tags as t JOIN post_tag as tp ON t.tag_id = tp.tag_id WHERE t.tag_id = :id');
+        $this->db->query('DELETE tags, post_tag FROM tags INNER JOIN post_tag ON tags.tag_id = post_tag.tag_id WHERE tags.tag_id = :id');
         $this->db->bind(':id', $id);
         $result = $this->db->execute();
         if($result){
@@ -131,5 +131,16 @@ class Post
             return true;
         }
         return false;
+    }
+
+    public function getPostTags($id){
+        $this->db->query('SELECT tags.tag_id, tags.tag_name, tags.tag_color FROM post_tag, tags WHERE post_tag.tag_id = tags.tag_id AND post_tag.post_id=:id');
+        $this->db->bind(':id', $id);
+        return $this->db->getAll();
+    }
+    public function getTagPosts($id){
+        $this->db->query('SELECT posts.post_id, posts.post_title, posts.post_content, posts.user_id, posts.post_created FROM post_tag, posts WHERE post_tag.post_id = posts.post_id AND post_tag.tag_id=:id');
+        $this->db->bind(':id', $id);
+        return $this->db->getAll();
     }
 }
