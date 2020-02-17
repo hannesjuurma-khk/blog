@@ -91,10 +91,12 @@ class Posts extends Controller
     public function add(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $tags = $this->postModel->getTags();
             $data = array(
                 'title' => trim($_POST['title']),
                 'content' => trim($_POST['content']),
                 'user_id' => $_SESSION['user_id'],
+                'tags' => $tags,
                 'title_err' => '',
                 'content_err' => ''
             );

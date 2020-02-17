@@ -14,6 +14,17 @@
                 <textarea name="content" class="form-control form-control-lg <?php echo (!empty($data['content_err'])) ? 'is-invalid' : ''; ?>"><?php echo $data['content']; ?></textarea>
                 <span class="invalid-feedback"><?php echo $data['body_err']; ?></span>
             </div>
+            <div class="form-group">
+                <label for="tagselect">Pick your tags</label>
+                <select multiple class="form-control" id="tagselect">
+
+                <?php foreach ($data['tags'] as $tag) : ?>
+                    <option><?php echo $tag->tag_name; ?></option>
+                <?php endforeach; ?>
+
+                </select>
+
+            </div>
             <input type="submit" class="btn btn-success" value="Submit">
         </form>
     </div>
