@@ -61,10 +61,10 @@ class Post
         $this->db->bind(':content', $data['content']);
         $result = $this->db->execute();
         if($result){
-            return true;
-        } else {
-            return false;
+            return $result;
         }
+
+        return false;
     }
 
     public function getTags(){
