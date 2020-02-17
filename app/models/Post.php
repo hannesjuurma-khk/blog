@@ -66,4 +66,70 @@ class Post
             return false;
         }
     }
+
+    public function getTags(){
+        $this->db->query('SELECT * FROM tags');
+        return $this->db->getAll();
+    }
+
+    public function getTagsById($id){
+        $this->db->query('SELECT * FROM tags WHERE tag_id=:id');
+        $this->db->bind(':id', $id);
+        return $this->db->getOne();
+    }
+
+    public function addTag($data){
+        $this->db->query('INSERT INTO tags (tag_name, tag_color) VALUES(:name, :color)');
+        $this->db->bind(':name', $data['name']);
+        $this->db->bind(':color', $data['color']);
+        $result = $this->db->execute();
+        if($result){
+            return true;
+        }
+        return false;
+    }
+
+    public function editTag($data){
+        $this->db->query('UPDATE tags SET tag_name=:title, tag_color=:content WHERE tag_id=:id');
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':name', $data['name']);
+        $this->db->bind(':color', $data['color']);
+        $result = $this->db->execute();
+        if($result){
+            return true;
+        }
+        return false;
+    }
+
+    public function deleteTag($id){
+        $this->db->query('DELETE FROM tags as t JOIN post_tag as tp ON t.tag_id = tp.tag_id WHERE t.tag_id = :id');
+        $this->db->bind(':id', $id);
+        $result = $this->db->execute();
+        if($result){
+            return true;
+        }
+        return false;
+    }
+
+    public function addTag2Post($data){
+        $this->db->query('INSERT INTO post_tag (tag_id	, post_id) VALUES(:tag_id, :post_id)');
+        $this->db->bind(':tag_id', $data['tag_id']);
+        $this->db->bind(':post_id', $data['post_id']);
+        $result = $this->db->execute();
+        if($result){
+            return true;
+        }
+        return false;
+    }
+
+    public function removeTag2Post($data){
+        $this->db->query('DELETE FROM post_tag WHERE post_id=:post_id AND tag_id=:tag_id');
+        $this->db->bind(':tag_id', $data['tag_id']);
+        $this->db->bind(':post_id', $data['post_id']);
+        $result = $this->db->execute();
+        if($result){
+            return true;
+        }
+        return false;
+    }
 }
