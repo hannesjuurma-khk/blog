@@ -61,7 +61,9 @@ class Post
         $this->db->bind(':content', $data['content']);
         $result = $this->db->execute();
         if($result){
-            return $result;
+            $this->db->query('SELECT LAST_INSERT_ID() as post_id');
+            $result = $this->db->getOne();
+            return $result -> post_id;
         }
 
         return false;

@@ -3,6 +3,8 @@
 
 class Posts extends Controller
 {
+    public $postModel;
+
     /**
      * Page constructor.
      */
@@ -28,7 +30,7 @@ class Posts extends Controller
     }
 
     public function edit($id){
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             $data = array(
@@ -59,7 +61,7 @@ class Posts extends Controller
             }
         } else {
             $post = $this->postModel->getPostById($id);
-            if($post->user_id != $_SESSION['user_id']){
+            if($post->user_id !== $_SESSION['user_id']){
                 redirect('posts');
             }
             $data = array(
@@ -72,9 +74,9 @@ class Posts extends Controller
     }
 
     public function delete($id){
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $post = $this->postModel->getPostById($id);
-            if($post->user_id != $_SESSION['user_id']){
+            if($post->user_id !== $_SESSION['user_id']){
                 redirect('posts');
             }
             if($this->postModel->deletePost($id)){
@@ -89,7 +91,7 @@ class Posts extends Controller
     }
 
     public function add(){
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $tags = $this->postModel->getTags();
             $data = array(
@@ -101,9 +103,6 @@ class Posts extends Controller
                 'title_err' => '',
                 'content_err' => ''
             );
-            echo '<pre>';
-            print_r($data);
-            echo '</pre>';
 
             if(empty($data['title'])){
                 $data['title_err'] = 'Please enter title';
@@ -112,13 +111,14 @@ class Posts extends Controller
                 $data['content_err'] = 'Please enter content text';
             }
 
-            if(empty($data['title_err']) and empty($data['content_err'])){
-                if($this->postModel->addPost($data) ){
-                    foreach ($data["tag_ids"] as $tag) {
+            if(empty($data['title_err']) && empty($data['content_err'])){
+                $result = $this->postModel->addPost($data);
+                if($result){
+                    foreach ($data['tag_ids'] as $tag) {
                         $this->postModel->addTag2Post(
                           array(
                               'tag_id' => $tag,
-                              'post_id' =>
+                              'post_id' => $result
                           )
                         );
                     }
@@ -133,13 +133,10 @@ class Posts extends Controller
         } else {
             $tags = $this->postModel->getTags();
             $data = array(
-                'title' => 'tttest',
+                'title' => '',
                 'content' => '',
                 'tags' => $tags
             );
-            echo '<pre>';
-            print_r($data);
-            echo '</pre>';
             $this->view('posts/add', $data);
         }
     }
