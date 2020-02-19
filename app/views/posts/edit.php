@@ -1,5 +1,5 @@
 <?php require_once APPROOT.'/views/inc/header.php'; ?>
-    <a href="<?php echo URLROOT; ?>/posts" class="btn btn-light"><i class="fa fa-backward"></i> Back</a>
+    <a href="<?php echo URLROOT; ?>/posts" class="btn btn-danger"><i class="fa fa-backward"></i> Back</a>
     <div class="card card-body bg-light mt-5">
         <h2>Edit Post</h2>
         <p>Create a post with this form</p>
@@ -13,6 +13,26 @@
                 <label for="content">Content: <sup>*</sup></label>
                 <textarea name="content" class="form-control form-control-lg <?php echo (!empty($data['content_err'])) ? 'is-invalid' : ''; ?>"><?php echo $data['content']; ?></textarea>
                 <span class="invalid-feedback"><?php echo $data['content_err']; ?></span>
+            </div>
+            <div class="form-group">
+                <label for="tagselect">Pick your tags</label>
+                <select name="tags[]" multiple class="form-control" id="tagselect">
+                    <?php foreach ($data['tags'] as $tag) : ?>
+                        <option
+                            <?php
+                            foreach ($data['postTags'] as $soloTag){
+                                $postArray[] = $soloTag;
+                            }
+                            if (empty($postArray)){
+                                $postArray[] = 0;
+                            }
+                            echo in_array($tag, $postArray) ? 'selected' : '';
+                            ?>
+                                value="<?php echo $tag->tag_id; ?>"><?php echo $tag->tag_name; ?></option>
+                    <?php endforeach; ?>
+
+                </select>
+
             </div>
             <input type="submit" class="btn btn-success" value="Submit">
         </form>

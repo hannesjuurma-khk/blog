@@ -113,6 +113,7 @@ class Post
         return false;
     }
 
+
     public function addTag2Post($data){
         $this->db->query('INSERT INTO post_tag (tag_id	, post_id) VALUES(:tag_id, :post_id)');
         $this->db->bind(':tag_id', $data['tag_id']);
@@ -128,6 +129,16 @@ class Post
         $this->db->query('DELETE FROM post_tag WHERE post_id=:post_id AND tag_id=:tag_id');
         $this->db->bind(':tag_id', $data['tag_id']);
         $this->db->bind(':post_id', $data['post_id']);
+        $result = $this->db->execute();
+        if($result){
+            return true;
+        }
+        return false;
+    }
+
+    public function removeAllTag2Post($id){
+        $this->db->query('DELETE FROM post_tag WHERE post_id=:post_id');
+        $this->db->bind(':post_id', $id);
         $result = $this->db->execute();
         if($result){
             return true;

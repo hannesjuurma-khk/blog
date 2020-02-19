@@ -3,6 +3,11 @@
     <h1><?php echo $data['post']->post_title; ?></h1>
     <div class="bg-secondary text-white p-2 mb-3">
         Created by <?php echo $data['post']->user_id;?> at <?php echo $data['post']->post_created;?>
+
+        <!-- Siit tulevad postitustele tagid -->
+        <?php foreach($data['post']->tags as $tag) :?>
+            <span style="background:<?php echo $tag->tag_color; ?>;" class="ml-2 p-1 badge badge-secondary"><?php echo $tag->tag_name; ?></span>
+        <?php endforeach; ?>
     </div>
     <p><?php echo $data['post']->post_content; ?></p>
     <hr>
