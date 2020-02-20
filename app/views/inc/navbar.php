@@ -10,6 +10,9 @@
             <li class="nav-item active">
                 <a class="nav-link" href="<?php echo URLROOT;?>">Home <span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo URLROOT;?>/tags">Tags</a>
+            </li>
         </ul>
         <ul class="navbar-nav ml-auto">
             <?php if(isset($_SESSION['user_id'])) :?>

@@ -4,6 +4,7 @@
 class Posts extends Controller
 {
     public $postModel;
+    public $tagModel;
 
     /**
      * Page constructor.
@@ -11,6 +12,7 @@ class Posts extends Controller
     public function __construct()
     {
         $this->postModel = $this->model('Post');
+        $this->tagModel = $this->model('Tag');
     }
 
     public function index() {
@@ -36,7 +38,7 @@ class Posts extends Controller
     public function edit($id){
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $tags = $this->postModel->getTags();
+            $tags = $this->tagModel->getTags();
             $data = array(
                 'id' => $id,
                 'title' => trim($_POST['title']),
@@ -85,7 +87,7 @@ class Posts extends Controller
                 $this->view('posts/edit', $data);
             }
         } else {
-            $tags = $this->postModel->getTags();
+            $tags = $this->tagModel->getTags();
             $post = $this->postModel->getPostById($id);
             $postTags = $this ->postModel->getPostTags($id);
 
@@ -124,7 +126,7 @@ class Posts extends Controller
     public function add(){
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $tags = $this->postModel->getTags();
+            $tags = $this->tagModel->getTags();
             $thisPostTags =
             $data = array(
                 'title' => trim($_POST['title']),
@@ -163,7 +165,7 @@ class Posts extends Controller
                 $this->view('posts/add', $data);
             }
         } else {
-            $tags = $this->postModel->getTags();
+            $tags = $this->tagModel->getTags();
             $data = array(
                 'title' => '',
                 'content' => '',

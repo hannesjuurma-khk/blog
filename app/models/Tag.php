@@ -14,15 +14,7 @@ class Tag
         $this->db->query('SELECT *
                             FROM tags
                             ORDER BY tag_name DESC');
-        $tags = $this->db->getAll();
-        return $tags;
-    }
-
-    public function getPostById($id){
-        $this->db->query('SELECT * FROM posts WHERE post_id=:id');
-        $this->db->bind(':id', $id);
-        $post = $this->db->getOne();
-        return $post;
+        return $this->db->getAll();
     }
 
     public function deleteTag($id){
@@ -31,14 +23,13 @@ class Tag
         $result = $this->db->execute();
         if($result){
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     public function addTag($data){
         $this->db->query('INSERT INTO tags (tag_name, tag_color) VALUES(:tag_name, :tag_color)');
-//        $this->db->bind(':tag_id', $data['tag_id']);
         $this->db->bind(':tag_name', $data['tag_name']);
         $this->db->bind(':tag_color', $data['tag_color']);
         $result = $this->db->execute();
@@ -51,15 +42,28 @@ class Tag
         return false;
     }
 
-    public function getTagsOld(){
-        $this->db->query('SELECT * FROM tags');
-        return $this->db->getAll();
-    }
-
     public function getTagById($id){
         $this->db->query('SELECT * FROM tags WHERE tag_id=:id');
         $this->db->bind(':id', $id);
         return $this->db->getOne();
+    }
+
+    public function editTag($data){
+        $this->db->query('UPDATE tags SET tag_name=:title, tag_color=:content WHERE tag_id=:id');
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':name', $data['name']);
+        $this->db->bind(':color', $data['color']);
+        $result = $this->db->execute();
+        if($result){
+            return true;
+        }
+        return false;
+    }
+
+    public function getTagPosts($id){
+        $this->db->query('SELECT posts.post_id, posts.post_title, posts.post_content, posts.user_id, posts.post_created FROM post_tag, posts WHERE post_tag.post_id = posts.post_id AND post_tag.tag_id=:id');
+        $this->db->bind(':id', $id);
+        return $this->db->getAll();
     }
 
 }

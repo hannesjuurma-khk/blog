@@ -18,21 +18,9 @@
                 <label for="tagselect">Pick your tags</label>
                 <select name="tags[]" multiple class="form-control" id="tagselect">
                     <?php foreach ($data['tags'] as $tag) : ?>
-                        <option
-                            <?php
-                            foreach ($data['postTags'] as $soloTag){
-                                $postArray[] = $soloTag;
-                            }
-                            if (empty($postArray)){
-                                $postArray[] = 0;
-                            }
-                            echo in_array($tag, $postArray) ? 'selected' : '';
-                            ?>
-                                value="<?php echo $tag->tag_id; ?>"><?php echo $tag->tag_name; ?></option>
+                        <option value="<?php echo $tag->tag_id; ?>"<?php echo in_array($tag, $data['postTags']) ? 'selected' : '' ?>><?php echo $tag->tag_name; ?></option>
                     <?php endforeach; ?>
-
                 </select>
-
             </div>
             <input type="submit" class="btn btn-success" value="Submit">
         </form>
