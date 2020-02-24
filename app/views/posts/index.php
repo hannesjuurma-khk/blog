@@ -15,8 +15,7 @@
 
         <!-- Siit tulevad postitustele tagid -->
         <?php foreach($post->tags as $tags) :?>
-            <span
-                style="background:<?php echo $tags->tag_color; ?>;" class="ml-2 p-1 badge badge-secondary"><?php echo $tags->tag_name; ?></span>
+            <a style="background:<?php echo $tags->tag_color; ?>;" class="ml-2 p-1 badge badge-secondary" href="<?php echo URLROOT; ?>/tags/posts/<?php echo $tags->tag_id; ?>"><?php echo $tags->tag_name; ?></a>
         <?php endforeach; ?>
         </div>
         <p class="card-text"><?php echo $post->postContent; ?></p>

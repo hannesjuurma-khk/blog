@@ -4,6 +4,7 @@
 class Tags extends Controller
 {
     public $tagModel;
+    public $postModel;
 
     /**
      * Page constructor.
@@ -11,6 +12,7 @@ class Tags extends Controller
     public function __construct()
     {
         $this->tagModel = $this->model('Tag');
+        $this->postModel = $this->model('Post');
     }
 
     public function index() {
@@ -75,6 +77,28 @@ class Tags extends Controller
                 'tags' => $tags
             );
             $this->view('tags/add', $data);
+        }
+    }
+
+    public function posts($sourceId){
+        if(is_numeric($sourceId)){
+            $posts = $this->tagModel->getTagPosts($sourceId);
+            if(is_array($posts) && count($posts)>0){
+                foreach ($posts as $post) {
+                    $post->tags = $this ->postModel->getPostTags($post->postId);
+                }
+                $data = array(
+                    'posts' => $posts
+                );
+                $this->view('posts/index', $data);
+            }
+            else {
+                message('post_message', 'No posts found for tag');
+                redirect('tags');
+            }
+        } else {
+            message('post_message', 'Invalid tag ID');
+            redirect('posts');
         }
     }
 

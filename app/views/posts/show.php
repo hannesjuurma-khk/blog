@@ -6,7 +6,7 @@
 
         <!-- Siit tulevad postitustele tagid -->
         <?php foreach($data['post']->tags as $tag) :?>
-            <span style="background:<?php echo $tag->tag_color; ?>;" class="ml-2 p-1 badge badge-secondary"><?php echo $tag->tag_name; ?></span>
+            <a style="background:<?php echo $tag->tag_color; ?>;" class="ml-2 p-1 badge badge-secondary" href="<?php echo URLROOT; ?>/tags/posts/<?php echo $tag->tag_id; ?>"><?php echo $tag->tag_name; ?></a>
         <?php endforeach; ?>
     </div>
     <p><?php echo $data['post']->post_content; ?></p>

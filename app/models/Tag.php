@@ -61,7 +61,12 @@ class Tag
     }
 
     public function getTagPosts($id){
-        $this->db->query('SELECT posts.post_id, posts.post_title, posts.post_content, posts.user_id, posts.post_created FROM post_tag, posts WHERE post_tag.post_id = posts.post_id AND post_tag.tag_id=:id');
+        $this->db->query('SELECT
+                            posts.post_id as postId,
+                            posts.user_id as userId,
+                            posts.post_created as postCreated,
+                            posts.post_content as postContent
+                            FROM post_tag, posts WHERE post_tag.post_id = posts.post_id AND post_tag.tag_id=:id');
         $this->db->bind(':id', $id);
         return $this->db->getAll();
     }
